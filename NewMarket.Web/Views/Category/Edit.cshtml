@@ -1,0 +1,61 @@
+﻿@model NewMarket.Entities.Category
+@{
+    ViewBag.Title = "Edit";
+
+    var trueChecked = Model.isFeatured ? "checked" : string.Empty;
+    var falseChecked = !Model.isFeatured ? "checked" : string.Empty;
+
+}
+
+<h2>Edit Category</h2>
+<form id="editCategory">
+
+    <input type="hidden" name="ID" value="@Model.ID" />
+
+    <label>Name</label>
+    <input name="Name" value="@Model.Name" />
+
+    <br />
+
+    <label>Description</label>
+    <input name="Description" value="@Model.Description" />
+    <br />
+
+    <button id="updateBtn" type="button">Update</button>
+</form>
+
+<script>
+    $("#updateBtn").click(function () {
+        $.ajax({
+            type:'POST',
+            url: '/Category/Edit',
+            data: $("#editCategory").serialize()
+        })
+        .done(function (response) {
+            $("#tableContiner").html(response);
+            $("#actionContainer").html("");
+        })
+        .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+            alert("FAIL");
+        })
+    });
+</script>
+@*<form method="post">
+    <input type="hidden" name="ID" value="@Model.ID" />
+
+    <label>Name</label>
+    <input name="Name" value="@Model.Name"/>
+    <br />
+    <label>Destriction</label>
+    <input name="Description" value="@Model.Description"/>
+
+    <br />
+
+    <label>Is Featured?</label>
+    <input name="isFeatured" type="radio" value="True" @trueChecked/>True
+    <input name="isFeatured" type="radio" value="False"@falseChecked/>False
+    <br/>
+
+
+    <button type="submit">Save</button>
+</form>*@
